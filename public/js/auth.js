@@ -18,17 +18,12 @@ var uiConfig = {
 	signInFlow: 'popup',
 	signInSuccessUrl: 'index.html',
 	signInOptions: [
-		// Leave the lines as is for the providers you want to offer your users.
-		{
-			provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-			requireDisplayName: true
-		},
 		//   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
 		//   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
 		//   firebase.auth.GithubAuthProvider.PROVIDER_ID,
 		{
 			provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-			requireDisplayName: false
+			requireDisplayName: true
 		}
 		//   firebase.auth.PhoneAuthProvider.PROVIDER_ID
 	],

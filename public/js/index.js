@@ -1,8 +1,8 @@
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-		name = user.name;
+		name = user.displayName;
 		checkDisplayname();
-		console.log(name + ' is logged in');
+		console.log(name + ' logged in');
 		$('#login').hide();
 		$('#logout').show();
 	} else {
@@ -10,6 +10,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		$('#login').show();
 		console.log('No user logged in');
 	}
+
+	// Log user's data to firestore
 
 	// Login functionality
 	const loginBtn = document.getElementById('login');
@@ -20,7 +22,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//  Logout functinoality
 	const logoutBtn = document.getElementById('logout');
 	logoutBtn.addEventListener('click', (e) => {
-		firebase.auth().signOut();
+		firebase.auth().signOut(); 
 	});
 
 	// Display user's displayname on nav
@@ -28,9 +30,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 	navUserRef.innerHTML = name;
 
 	// Check user's displayname
-	function checkDisplayname() {
+	function checkDisplayname(name) {
 		if (name == 'undefined') {
 			name = '';
 		}
 	}
+
+	// Listen for Jumpday add
+	const addJumpday = document.getElementById('add_jumpday');
+
+	// Listen for Workout add
+	const addWorkout = document.getElementById('add_workout');
 });
