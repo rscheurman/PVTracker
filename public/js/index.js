@@ -1,7 +1,10 @@
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		name = user.displayName;
+		uid = user.uid;
+		email = user.email;
 		checkDisplayname();
+		writeUserData(name, uid, email);
 		console.log(name + ' logged in');
 		$('#login').hide();
 		$('#logout').show();
@@ -12,6 +15,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 
 	// Log user's data to firestore
+	function writeUserData(name, uid, email) {
+		const database = firebase.firestore();
+		const settings = {
+			timestampsInSnapshots: true
+		};
+		database.settings(settings);
+		userData = database.collection('users').doc(uid).set({
+			name: name,
+			uid: uid,
+			email: email
+		});
+	}
 
 	// Login functionality
 	const loginBtn = document.getElementById('login');
@@ -22,7 +37,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//  Logout functinoality
 	const logoutBtn = document.getElementById('logout');
 	logoutBtn.addEventListener('click', (e) => {
-		firebase.auth().signOut(); 
+		firebase.auth().signOut();
 	});
 
 	// Display user's displayname on nav
