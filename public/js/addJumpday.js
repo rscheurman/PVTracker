@@ -1,38 +1,113 @@
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        name = user.displayName;
-        checkDisplayname();
-        console.log(name + ' logged in');
-        $('#login').hide();
-        $('#logout').show();
-    } else {
-        $('#logout').hide();
-        $('#login').show();
-        console.log('No user logged in');
-    }
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+		name = user.displayName;
+		checkDisplayname();
+		console.log(name + ' logged in');
+		$('#login').hide();
+		$('#logout').show();
+	} else {
+		$('#logout').hide();
+		$('#login').show();
+		console.log('No user logged in');
+	}
 
-    // Login functionality
-    const loginBtn = document.getElementById('login');
-    loginBtn.addEventListener('click', (e) => {
-        window.location.replace('auth.html');
-    });
+	// Login functionality
+	const loginBtn = document.getElementById('login');
+	loginBtn.addEventListener('click', (e) => {
+		window.location.replace('auth.html');
+	});
 
-    //  Logout functinoality
-    const logoutBtn = document.getElementById('logout');
-    logoutBtn.addEventListener('click', (e) => {
-        firebase.auth().signOut();
-    });
+	//  Logout functinoality
+	const logoutBtn = document.getElementById('logout');
+	logoutBtn.addEventListener('click', (e) => {
+		firebase.auth().signOut();
+	});
 
-    // Display user's displayname on nav
-    const navUserRef = document.getElementById('nav_user_ref');
-    navUserRef.innerHTML = name;
+	// Display user's displayname on nav
+	const navUserRef = document.getElementById('nav_user_ref');
+	navUserRef.innerHTML = name;
 
-    // Check user's displayname
-    function checkDisplayname(name) {
-        if (name == 'undefined') {
-            name = '';
-        }
-    }
+	// Check user's displayname
+	function checkDisplayname(name) {
+		if (name == 'undefined') {
+			name = '';
+		}
+	}
 
-    
+	// Add form data to firestore
+	const addJumpBtn = document.getElementById('addJumpBtn');
+	const runStepsId = document.getElementById('runSteps');
+	const poleFeetId = document.getElementById('poleFeet');
+	const poleInchId = document.getElementById('poleInch');
+	const poleWeightId = document.getElementById('poleWeight');
+	const mentalQuesId = document.getElementById('mentalQues');
+	const goodOrBadId = document.getElementById('goodOrBad');
+	const whyGoodOrBadId = document.getElementById('whyGoodOrBad');
+
+	addJumpBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		var runSteps = runStepsId.value;
+		var poleFeet = poleFeetId.value;
+		var poleInch = poleInchId.value;
+		var poleWeight = poleWeightId.value;
+		var mentalQues = mentalQuesId.value;
+		var goodOrBad = goodOrBadId.value;
+		var whyGoodOrBad = whyGoodOrBadId.value;
+		changeGoodOrBad();
+
+		// Change the switch to good or bad vs true or false
+		function changeGoodOrBad() {
+			if (goodOrBad == true) {
+				goodOrBad = 'good';
+			} else {
+				goodOrBad = 'bad';
+			}
+		}
+		// Get date for jumpday tracking and db refrences
+		// Start
+		today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		var today = dd + '.' + mm + '.' + yyyy;
+		// End
+
+		// Push data to firestore
+		db = firebase.firestore();
+
+		var jumpData = {
+			runSteps: runSteps,
+			poleFeet: poleFeet,
+			poleInch: poleInch,
+			poleWeight: poleWeight,
+			mentalQues: mentalQues,
+			goodOrBad: goodOrBad,
+			whyGoodOrBad: whyGoodOrBad
+		};
+
+		db
+			.collection('users')
+			.doc(user.uid)
+			.collection('jumpdays')
+			.doc(today)
+			.collection('jumps')
+			.add(jumpData)
+			.then(function() {
+				M.toast({ html: 'Jump Added Successfully' });
+			})
+			.catch(function(error) {
+				M.toast({ html: 'Oops Try Again.....', error });
+			});
+
+		$('#addJumpForm').trigger('reset');
+	});
+	// Initialize all Materializecss JS
+	M.AutoInit();
 });

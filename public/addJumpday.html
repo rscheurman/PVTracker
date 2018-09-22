@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add New Jumpday</title>
-    <script src="js/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/materialize.css">
@@ -16,7 +15,7 @@
     <nav>
         <div class="nav-wrapper orange darken-3">
             <div class="container">
-                <a href="index.html" class="brand-logo">PVTracker</a>
+                <a href="index.html" class="brand-logo hide-on-small-only">PVTracker</a>
                 <ul id="nav-mobile" class="right">
                     <li><a id="login" href="auth.html">Login</a></li>
                     <li><a id="logout">Logout</a></li>
@@ -26,7 +25,73 @@
         </div>
     </nav>
     <!-- End Navbar -->
-
+    
+    <!-- Start Form -->
+    <div class="container">
+        <div class="row">
+            <form id="addJumpForm" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <p class="range-field">
+                            <label>Run (How many lefts?)</label>
+                            <input type="range" id="runSteps" name="range" min="1" max="9">
+                        </p>
+                    </div>
+                    <div class="input-field col s4">
+                        <select id="poleFeet">
+                            <option value="" disabled selected>Feet</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                        <label>Pole Length</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select id="poleInch">
+                            <option value="" disabled selected>Inch</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s12">
+                        <p class="range-field">
+                            <label>Pole Weight(lbs)</label>
+                            <input type="range" id="poleWeight" name="range" min="75" max="220" step="5">
+                        </p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="mentalQues" class="materialize-textarea"></textarea>
+                        <label>Mental Ques</label>
+                    </div>
+                    <div class="switch col s12">
+                        <label>
+                            Bad
+                            <input id="goodOrBad" type="checkbox">
+                            <span class="lever"></span>
+                            Good
+                        </label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="whyGoodOrBad" class="materialize-textarea"></textarea>
+                        <label>Why?</label>
+                    </div>
+                    <div class="input-field col s12 m3">
+                        <button id="addJumpBtn" type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add Jump</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End Form -->
+    
+    
+    <script type="text/javascript" src="js/materialize.js"></script>
     <script src="js/firebase.js"></script>
     <script src="js/firestore.js"></script>
     <script src="js/addJumpday.js"></script>
