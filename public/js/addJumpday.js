@@ -43,6 +43,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 	const mentalQuesId = document.getElementById('mentalQues');
 	const goodOrBadId = document.getElementById('goodOrBad');
 	const whyGoodOrBadId = document.getElementById('whyGoodOrBad');
+	const clearanceYesOrNoId = document.getElementById('clearanceYesOrNo');
+	const barHeightId = document.getElementById('barHeight');
 
 	addJumpBtn.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -53,6 +55,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var mentalQues = mentalQuesId.value;
 		var goodOrBad = goodOrBadId.value;
 		var whyGoodOrBad = whyGoodOrBadId.value;
+		var clearanceYesOrNo = clearanceYesOrNoId.value;
+		var barHeight = barHeightId.value;
+		changeNoYes();
 		changeGoodOrBad();
 
 		// Change the switch to good or bad vs true or false
@@ -61,6 +66,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 				goodOrBad = 'good';
 			} else {
 				goodOrBad = 'bad';
+			}
+		}
+		function changeNoYes() {
+			if (barHeight == true) {
+				barHeight = 'yes';
+			} else {
+				barHeight = 'no';
 			}
 		}
 		// Get date for jumpday tracking and db refrences
@@ -76,7 +88,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		if (mm < 10) {
 			mm = '0' + mm;
 		}
-		var today = dd + '.' + mm + '.' + yyyy;
+		var today = mm + '.' + dd + '.' + yyyy;
 		// End
 
 		// Push data to firestore
@@ -84,6 +96,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 		var jumpData = {
 			runSteps: runSteps,
+			clearaceYesOrNo: clearanceYesOrNo,
+			barHeight: barHeight,
 			poleFeet: poleFeet,
 			poleInch: poleInch,
 			poleWeight: poleWeight,
