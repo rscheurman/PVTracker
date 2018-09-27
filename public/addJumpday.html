@@ -17,8 +17,9 @@
     <nav>
         <div class="nav-wrapper orange darken-3">
             <div class="container">
-                <a href="index.html" class="brand-logo hide-on-small-only">PVTracker</a>
-                <ul id="nav-mobile" class="right">
+                <a href="index.html" class="brand-logo">PVTracker</a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
                     <li><a id="login" href="auth.html">Login</a></li>
                     <li><a id="logout">Logout</a></li>
                     <li><a id="nav_user_ref"></a></li>
@@ -26,6 +27,12 @@
             </div>
         </div>
     </nav>
+    
+    <ul class="sidenav" id="mobile-nav">
+        <li><a id="mobile_nav_user_ref"></a></li>
+        <li><a id="mobile_nav_login" href="auth.html">Login</a></li>
+        <li><a id="mobile_nav_logout">Logout</a></li>
+    </ul>
     <!-- End Navbar -->
 
     <!-- Start Form -->

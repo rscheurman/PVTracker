@@ -1,31 +1,18 @@
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		name = user.displayName;
-		uid = user.uid;
-		email = user.email;
 		checkDisplayname();
-		writeUserData(name, uid, email);
 		console.log(name + ' logged in');
 		$('#login').hide();
+		$('#mobile_nav_login').hide();
 		$('#logout').show();
+		$('#mobile_nav_logout').show();
 	} else {
 		$('#logout').hide();
+		$('#mobile_nav_logout').hide();
 		$('#login').show();
+		$('#mobile_nav_login').show();
 		console.log('No user logged in');
-	}
-
-	// Log user's data to firestore
-	function writeUserData(name, uid, email) {
-		const database = firebase.firestore();
-		const settings = {
-			timestampsInSnapshots: true
-		};
-		database.settings(settings);
-		userData = database.collection('users').doc(uid).set({
-			name: name,
-			uid: uid,
-			email: email
-		});
 	}
 
 	// Login functionality
@@ -34,15 +21,27 @@ firebase.auth().onAuthStateChanged(function(user) {
 		window.location.replace('auth.html');
 	});
 
+	// Mobile login functionality
+	const mobileLoginBtn = document.getElementById('mobile_nav_login');
+	loginBtn.addEventListener('click', (e) => {
+		window.location.replace('auth.html');
+	});
+
 	//  Logout functinoality
 	const logoutBtn = document.getElementById('logout');
 	logoutBtn.addEventListener('click', (e) => {
-		firebase.auth().signOut();
+		firebase.auth().signOut().then(function() {
+			window.location.href = 'index.html';
+		});
 	});
 
-	// Display user's displayname on nav
-	const navUserRef = document.getElementById('nav_user_ref');
-	navUserRef.innerHTML = name;
+	//  Mobile logout functinoality
+	const mobileLogoutBtn = document.getElementById('mobile_nav_logout');
+	mobileLogoutBtn.addEventListener('click', (e) => {
+		firebase.auth().signOut().then(function() {
+			window.location.href = 'index.html';
+		});
+	});
 
 	// Check user's displayname
 	function checkDisplayname(name) {
@@ -50,6 +49,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 			name = '';
 		}
 	}
+
+	// Mobile Nav Initializer
+	$(document).ready(function() {
+		$('.sidenav').sidenav();
+		// Display user's displayname on mobile nav
+		$('#mobile_nav_user_ref').html(name);
+	});
 
 	// Listen for Jumpday add
 	const addJumpday = document.getElementById('add_jumpday');

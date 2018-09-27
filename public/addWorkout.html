@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add New Jumpday</title>
-    <script src="js/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="css/materialize.css">
@@ -18,20 +17,28 @@
     <nav>
         <div class="nav-wrapper orange darken-3">
             <div class="container">
-                <a href="index.html" class="brand-logo hide-on-small-only">PVTracker</a>
-                <ul id="nav-mobile" class="right">
-                    <li><a id="login" href="auth.html">Login</a></li>
-                    <li><a id="logout">Logout</a></li>
-                    <li><a id="nav_user_ref"></a></li>
-                </ul>
-            </div>
+                <a href="index.html" class="brand-logo">PVTracker</a>
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a id="login" href="auth.html">Login</a></li>
+                <li><a id="logout">Logout</a></li>
+                <li><a id="nav_user_ref"></a></li>
+            </ul>
         </div>
+    </div>
     </nav>
+    
+    <ul class="sidenav" id="mobile-nav">
+        <li><a id="mobile_nav_user_ref"></a></li>
+        <li><a id="mobile_nav_login" href="auth.html">Login</a></li>
+        <li><a id="mobile_nav_logout">Logout</a></li>
+    </ul>
     
     <div class="container">
         <h1>This page is still under development :)</h1>
     </div>
     
+    <script src="js/materialize.js"></script>
     <script src="js/firebase.js"></script>
     <script src="js/addWorkout.js"></script>
 </body>

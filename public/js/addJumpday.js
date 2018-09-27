@@ -4,10 +4,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 		checkDisplayname();
 		console.log(name + ' logged in');
 		$('#login').hide();
+		$('#mobile_nav_login').hide();
 		$('#logout').show();
+		$('#mobile_nav_logout').show();
 	} else {
 		$('#logout').hide();
+		$('#mobile_nav_logout').hide();
 		$('#login').show();
+		$('#mobile_nav_login').show();
 		console.log('No user logged in');
 	}
 
@@ -17,15 +21,27 @@ firebase.auth().onAuthStateChanged(function(user) {
 		window.location.replace('auth.html');
 	});
 
+	// Mobile login functionality
+	const mobileLoginBtn = document.getElementById('mobile_nav_login');
+	loginBtn.addEventListener('click', (e) => {
+		window.location.replace('auth.html');
+	});
+
 	//  Logout functinoality
 	const logoutBtn = document.getElementById('logout');
 	logoutBtn.addEventListener('click', (e) => {
-		firebase.auth().signOut();
+		firebase.auth().signOut().then(function() {
+			window.location.href = 'index.html';
+		});
 	});
 
-	// Display user's displayname on nav
-	const navUserRef = document.getElementById('nav_user_ref');
-	navUserRef.innerHTML = name;
+	//  Mobile logout functinoality
+	const mobileLogoutBtn = document.getElementById('mobile_nav_logout');
+	mobileLogoutBtn.addEventListener('click', (e) => {
+		firebase.auth().signOut().then(function() {
+			window.location.href = 'index.html';
+		});
+	});
 
 	// Check user's displayname
 	function checkDisplayname(name) {
@@ -33,6 +49,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 			name = '';
 		}
 	}
+
+	// Mobile Nav Initializer
+	$(document).ready(function() {
+		$('.sidenav').sidenav();
+		// Display user's displayname on mobile nav
+		$('#mobile_nav_user_ref').html(name);
+	});
 
 	// Add form data to firestore
 	const addJumpBtn = document.getElementById('addJumpBtn');
