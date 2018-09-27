@@ -8,11 +8,17 @@ firebase.auth().onAuthStateChanged(function(user) {
 		$('#logout').show();
 		$('#mobile_nav_logout').show();
 	} else {
+		notLoggedIn();
 		$('#logout').hide();
 		$('#mobile_nav_logout').hide();
 		$('#login').show();
 		$('#mobile_nav_login').show();
 		console.log('No user logged in');
+	}
+
+	// Not logged in function
+	function notLoggedIn() {
+		window.location.replace('index.html');
 	}
 
 	// Login functionality

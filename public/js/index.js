@@ -1,18 +1,9 @@
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		name = user.displayName;
-		checkDisplayname();
-		console.log(name + ' logged in');
-		$('#login').hide();
-		$('#mobile_nav_login').hide();
-		$('#logout').show();
-		$('#mobile_nav_logout').show();
+		userAuthenticatedFunctions();
 	} else {
-		$('#logout').hide();
-		$('#mobile_nav_logout').hide();
-		$('#login').show();
-		$('#mobile_nav_login').show();
-		console.log('No user logged in');
+		userNotAuthenticatedFunction();
 	}
 
 	// Login functionality
@@ -32,6 +23,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	logoutBtn.addEventListener('click', (e) => {
 		firebase.auth().signOut().then(function() {
 			window.location.href = 'index.html';
+			userNotAuthenticatedFunction();
 		});
 	});
 
@@ -40,8 +32,19 @@ firebase.auth().onAuthStateChanged(function(user) {
 	mobileLogoutBtn.addEventListener('click', (e) => {
 		firebase.auth().signOut().then(function() {
 			window.location.href = 'index.html';
+			userNotAuthenticatedFunction();
 		});
 	});
+
+	// Login for no user card
+	$('#card_login').click(function() {
+		window.location.href = 'auth.html';
+	});
+
+	// Display users name in nav bar
+	function displayUsernameNav(name) {
+		$('#nav_user_ref').html(name);
+	}
 
 	// Check user's displayname
 	function checkDisplayname(name) {
@@ -62,4 +65,28 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 	// Listen for Workout add
 	const addWorkout = document.getElementById('add_workout');
+
+	// User Authenticated Function
+	function userAuthenticatedFunctions() {
+		$('#noUserContent').hide();
+		$('#addJumpdayCard').show();
+		checkDisplayname();
+		displayUsernameNav(name);
+		console.log(name + ' logged in');
+		$('#login').hide();
+		$('#mobile_nav_login').hide();
+		$('#logout').show();
+		$('#mobile_nav_logout').show();
+	}
+
+	// User Not Authenticated Function
+	function userNotAuthenticatedFunction() {
+		$('#noUserContent').show();
+		$('#addJumpdayCard').hide();
+		$('#logout').hide();
+		$('#mobile_nav_logout').hide();
+		$('#login').show();
+		$('#mobile_nav_login').show();
+		console.log('No user logged in');
+	}
 });
